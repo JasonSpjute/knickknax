@@ -18,17 +18,28 @@ export default class KK {
                 <img class="card-img-top" src="${this.image}" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">${this.name}</h5>
-                    <p class="card-subtitle" >${this.price}</p>
+                    <h6 class="card-subtitle" >$${this.price}</h6>
                     <p class="card-text">${this.description}</p>
-                    <p class="card-text">${this.quantity}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <i class="card-text">Remaining: ${this.quantity}</i><br/>
+                    <a href="#" class="btn btn-primary" onclick="app.kkController.addKK('${this.id}')">Add to Cart</a>
                 </div>
             </div>
         </div>
         `
     }
 
-    get cartTemplate() {
-
+    get CartTemplate() {
+        return /*html*/`
+            <div class="col-4 py-3">
+                <div class="card">
+                    <img class="card-img-top" src="${this.image}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">${this.name}</h5>
+                        <h6 class="card-subtitle" >$${this.price}</h6>
+                        <p class="card-text">Quantity: ${this.cartQuantity}</p>
+                    </div>
+                </div>
+            </div>
+        `
     }
 }

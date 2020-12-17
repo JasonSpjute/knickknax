@@ -9,10 +9,28 @@ function _drawKKs() {
     document.getElementById("items").innerHTML = template
 }
 
+function _drawCart(){
+    console.log("drawing cart?...")
+    let template = ""
+    let cartItems = ProxyState.kks.filter(obj => obj.cartQuantity > 0)
+    cartItems.forEach(function (kk) {
+        template += kk.CartTemplate
+    })
+    // console.log(cartItems)
+    document.getElementById('cart-items').innerHTML = template
+    
+}
+
+function _drawTotal(total) {
+    document.getElementById('cart-total').innerHTML = `<h1>Total: $${total}</h1>`
+    document.getElementById('button-total').innerText = `$${total}`
+}
+
 export default class CreateKK {
 
     constructor() {
         ProxyState.on("kks", _drawKKs)
+        ProxyState.on("kks", _drawCart)
         _drawKKs()
 
 
@@ -23,13 +41,13 @@ export default class CreateKK {
             description: "Not meant for snuggling; stay 6 feet away from plush",
             image: "https://bullybloggers.files.wordpress.com/2020/04/fig.-9.jpg?w=580"
         })
-        kkService.createKK({
-            name: "Graduating Corona Plush",
-            price: 30,
-            quantity: 30,
-            description: "Happy Zoom Graduation!",
-            image: "https://www.giantmicrobes.com/us/media/catalog/product/cache/2/small_image/9df78eab33525d08d6e5fb8d27136e95/g/r/grad-covid-pd.jpg"
-        })
+        // kkService.createKK({
+        //     name: "Graduating Corona Plush",
+        //     price: 30,
+        //     quantity: 30,
+        //     description: "Happy Zoom Graduation!",
+        //     image: "https://www.giantmicrobes.com/us/media/catalog/product/cache/2/small_image/9df78eab33525d08d6e5fb8d27136e95/g/r/grad-covid-pd.jpg"
+        // })
         kkService.createKK({
             name: "Hand Sanitizer",
             price: 100,
@@ -51,27 +69,27 @@ export default class CreateKK {
             description: "Cover of the gods",
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-VfDpGSE0Ux-Rs_J2GsbxsLHfNm9dOHfnQxoe1cgwMsOyxVTGx3nI7g0N4ifNzWw27nPcfzAvd_TmTW7GAlcAlr7GElXDYEUPGw&usqp=CAU&ec=45750088"
         })
-        kkService.createKK({
-            name: "Car",
-            price: 5,
-            quantity: 100,
-            description: "Vroom Vroom",
-            image: "https://www.ikea.com/my/en/images/products/lillabo-toy-car-red__0175385_PE328763_S5.JPG"
-        })
-        kkService.createKK({
-            name: "Snowglobe",
-            price: 15,
-            quantity: 10,
-            description: "It snows",
-            image: "https://www.womansworld.com/wp-content/uploads/2019/12/crystal-snowglobe.jpg?w=1024"
-        })
-        kkService.createKK({
-            name: "Bobblehead",
-            price: 15,
-            quantity: 30,
-            description: "It Fauci's",
-            image: "https://cdn.cnn.com/cnnnext/dam/assets/200403150210-dr-fauci-bobblehead-full-169.jpg"
-        })
+        // kkService.createKK({
+        //     name: "Car",
+        //     price: 5,
+        //     quantity: 100,
+        //     description: "Vroom Vroom",
+        //     image: "https://www.ikea.com/my/en/images/products/lillabo-toy-car-red__0175385_PE328763_S5.JPG"
+        // })
+        // kkService.createKK({
+        //     name: "Snowglobe",
+        //     price: 15,
+        //     quantity: 10,
+        //     description: "It snows",
+        //     image: "https://www.womansworld.com/wp-content/uploads/2019/12/crystal-snowglobe.jpg?w=1024"
+        // })
+        // kkService.createKK({
+        //     name: "Bobblehead",
+        //     price: 15,
+        //     quantity: 30,
+        //     description: "It Fauci's",
+        //     image: "https://cdn.cnn.com/cnnnext/dam/assets/200403150210-dr-fauci-bobblehead-full-169.jpg"
+        // })
 
     }
     newKK() {
@@ -85,5 +103,14 @@ export default class CreateKK {
             image: form.image.value
         }
         kkService.createKK(obj)
+    }
+    addKK(id) {
+        kkService.addKK(id)
+        this.cartTotal()
+    }
+
+    cartTotal() {
+        let total = kkService.cartTotal()
+_drawTotal(total)
     }
 }
