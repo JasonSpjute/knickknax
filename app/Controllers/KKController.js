@@ -10,13 +10,11 @@ function _drawKKs() {
 }
 
 function _drawCart(){
-    console.log("drawing cart?...")
     let template = ""
     let cartItems = ProxyState.kks.filter(obj => obj.cartQuantity > 0)
     cartItems.forEach(function (kk) {
         template += kk.CartTemplate
     })
-    // console.log(cartItems)
     document.getElementById('cart-items').innerHTML = template
     
 }
